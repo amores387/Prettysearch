@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giomier aremos - Premium Downloads with GCash</title>
+    <title>Take a Break - Buy Me a Coffee</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #6f4e37 0%, #8b5a3c 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -60,7 +60,7 @@
             border: none;
             border-radius: 8px;
             font-weight: bold;
-            color: #667eea;
+            color: #6f4e37;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -104,7 +104,7 @@
         .download-btn {
             width: 100%;
             padding: 10px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #d4a574 0%, #a0826d 100%);
             color: white;
             border: none;
             border-radius: 4px;
@@ -114,7 +114,7 @@
         }
         
         .download-btn:hover {
-            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+            background: linear-gradient(135deg, #a0826d 0%, #d4a574 100%);
         }
         
         .loading {
@@ -161,7 +161,7 @@
         
         .modal h2 {
             margin-bottom: 15px;
-            color: #667eea;
+            color: #6f4e37;
         }
         
         .modal-buttons {
@@ -185,7 +185,7 @@
         }
         
         .btn-premium {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #d4a574 0%, #a0826d 100%);
             color: white;
         }
         
@@ -206,7 +206,7 @@
         .price-highlight {
             font-size: 1.5em;
             font-weight: bold;
-            color: #fff;
+            color: #ffd700;
         }
 
         .modal-error {
@@ -257,7 +257,7 @@
         }
 
         .tab-btn.active {
-            background: #667eea;
+            background: #6f4e37;
             color: white;
         }
 
@@ -279,7 +279,7 @@
         }
 
         .transaction-item strong {
-            color: #667eea;
+            color: #6f4e37;
         }
 
         .transaction-thumb {
@@ -294,20 +294,20 @@
 <body>
     <div class="container">
         <header>
-            <h1>☕ Giomier aremos</h1>
-            <p>Search millions of images • Free to view • Premium downloads available</p>
+            <h1>☕ Take a Break - Buy Me a Coffee</h1>
+            <p>Support content creators • Get premium downloads • Help fuel creativity</p>
         </header>
         
         <div class="pricing-info">
-            <p>🎉 Search & view images: <strong>FREE</strong></p>
-            <p>💾 Download high-quality: <span class="price-highlight">₱2 via GCash</span></p>
+            <p>🎉 Browse content: <strong>FREE</strong></p>
+            <p>☕ Support with coffee: <span class="price-highlight">₱2 via GCash</span></p>
         </div>
         
         <div class="search-box">
             <input 
                 type="text" 
                 id="searchInput" 
-                placeholder="Search for images... (nature, animals, city, etc.)"
+                placeholder="Search for images... (nature, coffee, art, etc.)"
                 autocomplete="off"
             >
             <button onclick="searchImages()">Search</button>
@@ -321,31 +321,31 @@
     <div id="downloadModal" class="modal">
         <div class="modal-content">
             <div class="tab-buttons">
-                <button class="tab-btn active" onclick="switchTab('payment')">Download</button>
-                <button class="tab-btn" onclick="switchTab('history')">My Downloads</button>
+                <button class="tab-btn active" onclick="switchTab('payment')">Support</button>
+                <button class="tab-btn" onclick="switchTab('history')">My Supports</button>
             </div>
 
             <div id="payment" class="tab-content active">
-                <h2>Download Image</h2>
+                <h2>Buy Me a Coffee</h2>
                 <img id="modalImage" style="max-width: 100%; margin: 15px 0; border-radius: 8px;">
-                <p style="margin-bottom: 20px;">Pay ₱2 via GCash</p>
+                <p style="margin-bottom: 20px;">Support with ₱2 via GCash</p>
                 <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                     <p style="font-size: 0.9em; color: #333; margin: 5px 0;"><strong>GCash Number:</strong></p>
-                    <p style="font-size: 1.1em; font-weight: bold; color: #667eea;">09300820308</p>
-                    <p style="font-size: 0.85em; color: #666; margin-top: 10px;">Reference: Image Download</p>
+                    <p style="font-size: 1.1em; font-weight: bold; color: #6f4e37;">09300820308</p>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px;">Reference: Coffee Support</p>
                 </div>
 
                 <div class="form-group">
-                    <label for="userName">Your Full Name:</label>
+                    <label for="userName">Your Name:</label>
                     <input 
                         type="text" 
                         id="userName" 
-                        placeholder="Enter your complete name"
+                        placeholder="Enter your name"
                     >
                 </div>
 
                 <div class="form-group">
-                    <label for="userImage">Upload Photo (Optional):</label>
+                    <label for="userImage">Your Photo (Optional):</label>
                     <input 
                         type="file" 
                         id="userImage" 
@@ -359,21 +359,21 @@
                     <input 
                         type="text" 
                         id="referenceInput" 
-                        placeholder="Enter 13-digit transaction reference"
+                        placeholder="Enter 13-digit reference"
                         maxlength="13"
                     >
                     <p style="font-size: 0.75em; color: #999; margin-top: 5px;">Must be exactly 13 digits</p>
                 </div>
                 <div class="modal-buttons">
                     <button class="btn-close" onclick="closeModal()">Close</button>
-                    <button class="btn-premium" onclick="downloadPremium()">Download Now</button>
+                    <button class="btn-premium" onclick="downloadPremium()">Send Coffee ☕</button>
                 </div>
             </div>
 
             <div id="history" class="tab-content">
-                <h2>My Downloads</h2>
+                <h2>My Coffee Supports</h2>
                 <div id="historyList" style="max-height: 400px; overflow-y: auto; text-align: left;">
-                    <p style="color: #999;">No downloads yet</p>
+                    <p style="color: #999;">No supports yet</p>
                 </div>
                 <button class="btn-close" onclick="closeModal()" style="width: 100%; margin-top: 15px;">Close</button>
             </div>
@@ -390,27 +390,27 @@
             return cleanRef.length === 13 && /^\d{13}$/.test(cleanRef);
         }
 
-        function saveDownloadRecord(name, refNumber, imageThumb, uploadedImageData) {
-            const records = JSON.parse(localStorage.getItem('downloads') || '[]');
+        function saveSupportRecord(name, refNumber, imageThumb, uploadedImageData) {
+            const records = JSON.parse(localStorage.getItem('supports') || '[]');
             const record = {
                 id: Date.now(),
                 name: name,
                 referenceNumber: refNumber,
-                downloadedImage: imageThumb,
+                contentImage: imageThumb,
                 uploadedImage: uploadedImageData,
                 date: new Date().toLocaleString(),
                 timestamp: Date.now()
             };
             records.unshift(record);
-            localStorage.setItem('downloads', JSON.stringify(records));
+            localStorage.setItem('supports', JSON.stringify(records));
         }
 
-        function loadDownloadHistory() {
-            const records = JSON.parse(localStorage.getItem('downloads') || '[]');
+        function loadSupportHistory() {
+            const records = JSON.parse(localStorage.getItem('supports') || '[]');
             const historyList = document.getElementById('historyList');
             
             if (records.length === 0) {
-                historyList.innerHTML = '<p style="color: #999;">No downloads yet</p>';
+                historyList.innerHTML = '<p style="color: #999;">No supports yet</p>';
                 return;
             }
 
@@ -419,7 +419,7 @@
                     <strong>Name:</strong> ${record.name}<br>
                     <strong>Reference:</strong> ${record.referenceNumber}<br>
                     <strong>Date:</strong> ${record.date}<br>
-                    ${record.downloadedImage ? `<img src="${record.downloadedImage}" class="transaction-thumb" alt="Downloaded">` : ''}
+                    ${record.contentImage ? `<img src="${record.contentImage}" class="transaction-thumb" alt="Content">` : ''}
                     ${record.uploadedImage ? `<br><strong>Your Photo:</strong><br><img src="${record.uploadedImage}" class="transaction-thumb" alt="Uploaded">` : ''}
                 </div>
             `).join('');
@@ -432,7 +432,7 @@
             document.querySelector(`button[onclick="switchTab('${tab}')"]`).classList.add('active');
             
             if (tab === 'history') {
-                loadDownloadHistory();
+                loadSupportHistory();
             }
         }
         
@@ -462,7 +462,7 @@
                 
                 displayImages(data.photos || []);
             } catch (error) {
-                showError('Failed to search images: ' + error.message);
+                showError('Failed to search: ' + error.message);
             } finally {
                 showLoading(false);
             }
@@ -473,7 +473,7 @@
             gallery.innerHTML = '';
             
             if (photos.length === 0) {
-                gallery.innerHTML = '<p style="color: white; grid-column: 1/-1;">No images found</p>';
+                gallery.innerHTML = '<p style="color: white; grid-column: 1/-1;">No results found</p>';
                 return;
             }
             
@@ -484,7 +484,7 @@
                     <img src="${photo.src.medium}" alt="image">
                     <div class="image-info">
                         <button class="download-btn" onclick="openDownloadModal('${photo.src.large}', '${photo.src.medium}')">
-                            Download (₱2)
+                            Buy Coffee (₱2)
                         </button>
                     </div>
                 `;
@@ -530,7 +530,7 @@
             }
             
             if (!isValidGCashReference(refNumber)) {
-                refError.textContent = '❌ Invalid reference number! Must be exactly 13 digits.';
+                refError.textContent = '❌ Invalid reference! Must be exactly 13 digits.';
                 refError.style.display = 'block';
                 return;
             }
@@ -540,15 +540,15 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     uploadedImageData = e.target.result;
-                    completeDownload(refNumber, userName, uploadedImageData);
+                    completeCoffee(refNumber, userName, uploadedImageData);
                 };
                 reader.readAsDataURL(userImageInput.files[0]);
             } else {
-                completeDownload(refNumber, userName, null);
+                completeCoffee(refNumber, userName, null);
             }
         }
 
-        function completeDownload(refNumber, userName, uploadedImageData) {
+        function completeCoffee(refNumber, userName, uploadedImageData) {
             const cleanRef = refNumber.trim().replace(/\D/g, '');
             
             const a = document.createElement('a');
@@ -556,10 +556,10 @@
             a.download = 'image.jpg';
             a.click();
 
-            saveDownloadRecord(userName, cleanRef, currentDownloadUrl, uploadedImageData);
+            saveSupportRecord(userName, cleanRef, currentDownloadUrl, uploadedImageData);
             
             closeModal();
-            alert('✓ Payment verified (Ref: ' + cleanRef + ')!\nDownload saved for ' + userName + '\nYour image is downloading.');
+            alert('☕ Thank you ' + userName + '!\nYour coffee support (Ref: ' + cleanRef + ') is recorded.\nContent is downloading.');
         }
         
         function showError(message) {
@@ -583,7 +583,7 @@
         });
         
         window.addEventListener('load', function() {
-            document.getElementById('searchInput').value = 'nature';
+            document.getElementById('searchInput').value = 'coffee';
             searchImages();
         });
     </script>
