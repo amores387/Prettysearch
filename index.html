@@ -205,6 +205,16 @@
             font-weight: bold;
             color: #fff;
         }
+
+        .modal-error {
+            background: #ff6b6b;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -244,14 +254,17 @@
                 <p style="font-size: 1.1em; font-weight: bold; color: #667eea;">09300820308</p>
                 <p style="font-size: 0.85em; color: #666; margin-top: 10px;">Reference: Image Download</p>
             </div>
+            <div class="modal-error" id="refError"></div>
             <div style="margin-bottom: 20px;">
                 <p style="font-size: 0.9em; color: #333; margin-bottom: 8px;"><strong>Enter GCash Reference Number:</strong></p>
                 <input 
                     type="text" 
                     id="referenceInput" 
-                    placeholder="Enter your transaction reference number"
+                    placeholder="Enter 13-digit transaction reference"
                     style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 4px; font-size: 0.95em;"
+                    maxlength="13"
                 >
+                <p style="font-size: 0.75em; color: #999; margin-top: 5px;">Must be exactly 13 digits</p>
             </div>
             <div class="modal-buttons">
                 <button class="btn-close" onclick="closeModal()">Close</button>
@@ -264,6 +277,11 @@
         const PEXELS_API_KEY = '4yHfWT4ezaTjLRkvUTzZLEawiGPtiKKZpepaX7zRKvqakYbRoOKZ4tda';
         const PEXELS_API_URL = 'https://api.pexels.com/v1';
         let currentDownloadUrl = '';
+        
+        function isValidGCashReference(refNumber) {
+            const cleanRef = refNumber.trim().replace(/\D/g, '');
+            return cleanRef.length === 13 && /^\d{13}$/.test(cleanRef);
+        }
         
         async function searchImages() {
             const query = document.getElementById('searchInput').value.trim();
@@ -325,28 +343,39 @@
             currentDownloadUrl = largeUrl;
             document.getElementById('modalImage').src = thumbUrl;
             document.getElementById('downloadModal').classList.add('active');
+            document.getElementById('referenceInput').value = '';
+            document.getElementById('refError').style.display = 'none';
         }
         
         function closeModal() {
             document.getElementById('downloadModal').classList.remove('active');
             document.getElementById('referenceInput').value = '';
+            document.getElementById('refError').style.display = 'none';
         }
         
         function downloadPremium() {
             const refNumber = document.getElementById('referenceInput').value.trim();
+            const refError = document.getElementById('refError');
             
             if (!refNumber) {
-                alert('Please enter your GCash reference number to download.');
+                refError.textContent = '⚠️ Please enter your GCash reference number';
+                refError.style.display = 'block';
                 return;
             }
             
+            if (!isValidGCashReference(refNumber)) {
+                refError.textContent = '❌ Invalid reference number! Must be exactly 13 digits.';
+                refError.style.display = 'block';
+                return;
+            }
+            
+            const cleanRef = refNumber.trim().replace(/\D/g, '');
             const a = document.createElement('a');
             a.href = currentDownloadUrl;
             a.download = 'image.jpg';
             a.click();
             closeModal();
-            alert('✓ Thank you for your payment (Ref: ' + refNumber + ')!\nYour image is downloading.');
-            document.getElementById('referenceInput').value = '';
+            alert('✓ Payment verified (Ref: ' + cleanRef + ')!\nYour image is downloading.');
         }
         
         function showError(message) {
