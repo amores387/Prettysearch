@@ -101,27 +101,10 @@
             padding: 15px;
         }
         
-        .photographer {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        
-        .free-badge {
-            display: inline-block;
-            background: #4CAF50;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
         .download-btn {
             width: 100%;
             padding: 10px;
-            background: #667eea;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
             border: none;
             border-radius: 4px;
@@ -131,14 +114,6 @@
         }
         
         .download-btn:hover {
-            background: #764ba2;
-        }
-        
-        .download-btn.premium {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-        
-        .download-btn.premium:hover {
             background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
         }
         
@@ -187,11 +162,6 @@
             color: #667eea;
         }
         
-        .modal p {
-            margin-bottom: 20px;
-            color: #666;
-        }
-        
         .modal-buttons {
             display: flex;
             gap: 10px;
@@ -209,11 +179,6 @@
         .btn-close {
             background: #ddd;
             color: #333;
-        }
-        
-        .btn-download {
-            background: #667eea;
-            color: white;
         }
         
         .btn-premium {
@@ -296,6 +261,8 @@
     </div>
     
     <script>
+        const PEXELS_API_KEY = '4yHfWT4ezaTjLRkvUTzZLEawiGPtiKKZpepaX7zRKvqakYbRoOKZ4tda';
+        const PEXELS_API_URL = 'https://api.pexels.com/v1';
         let currentDownloadUrl = '';
         
         async function searchImages() {
@@ -310,7 +277,11 @@
             hideError();
             
             try {
-                const response = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
+                const response = await fetch(`${PEXELS_API_URL}/search?query=${encodeURIComponent(query)}&per_page=20`, {
+                    headers: {
+                        'Authorization': PEXELS_API_KEY
+                    }
+                });
                 const data = await response.json();
                 
                 if (data.error) {
@@ -339,9 +310,9 @@
                 const card = document.createElement('div');
                 card.className = 'image-card';
                 card.innerHTML = `
-                    <img src="${photo.src.medium}" alt="${photo.photographer}">
+                    <img src="${photo.src.medium}" alt="image">
                     <div class="image-info">
-                        <button class="download-btn premium" onclick="openDownloadModal('${photo.src.large}', '${photo.src.medium}')">
+                        <button class="download-btn" onclick="openDownloadModal('${photo.src.large}', '${photo.src.medium}')">
                             Download (₱2)
                         </button>
                     </div>
@@ -361,15 +332,7 @@
             document.getElementById('referenceInput').value = '';
         }
         
-        function downloadFree() {
-            const a = document.createElement('a');
-            a.href = currentDownloadUrl;
-            a.target = '_blank';
-            a.click();
-            closeModal();
-        }
-        
-        async function downloadPremium() {
+        function downloadPremium() {
             const refNumber = document.getElementById('referenceInput').value.trim();
             
             if (!refNumber) {
@@ -400,14 +363,12 @@
             document.getElementById('loading').style.display = show ? 'block' : 'none';
         }
         
-        // Allow Enter key to search
         document.getElementById('searchInput').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 searchImages();
             }
         });
         
-        // Initial search
         window.addEventListener('load', function() {
             document.getElementById('searchInput').value = 'nature';
             searchImages();
