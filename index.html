@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta-name viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMD Image Search - CANVA DESIGN</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="terminal">
+    <div class="header">CMD IMAGE SEARCH — CANVA DESIGN</div>
+
+    <div class="line">Enter a keyword to search images:</div>
+
+    <div class="input-area">
+        <span class="prefix">C:\Search></span>
+        <input type="text" id="searchInput" placeholder="type here...">
+        <button onclick="searchImages()">ENTER</button>
+    </div>
+
+    <div id="loading" class="loading" style="display:none;">Searching...</div>
+
+    <div id="error" class="error"></div>
+
+    <div id="gallery" class="gallery"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
