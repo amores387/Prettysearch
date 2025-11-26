@@ -1,272 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Image Search</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        header {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-            padding-top: 20px;
-        }
-        
-        header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-        
-        .search-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 40px;
-        }
-        
-        .search-box input {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
-        }
-        
-        .search-box button {
-            padding: 15px 30px;
-            background: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            color: #667eea;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .search-box button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .image-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-        
-        .image-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-        
-        .image-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-        
-        .image-info {
-            padding: 15px;
-        }
-        
-        .download-btn {
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .download-btn:hover {
-            background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
-        }
-        
-        .loading {
-            text-align: center;
-            color: white;
-            font-size: 1.2em;
-        }
-        
-        .error {
-            background: #ff6b6b;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .pricing-info {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 1.2em;
-        }
-        
-        footer {
-            text-align: center;
-            color: rgba(255,255,255,0.6);
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            font-size: 0.9em;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1> Free Image Search</h1>
-            <p>Search and download high-quality images for free</p>
-            <p style="font-size: 0.85em; margin-top: 15px; opacity: 0.8;">By Remigio Somera</p>
-        </header>
-        
-        <div class="pricing-info">
-             All images are completely FREE to download
-        </div>
-        
-        <div class="search-box">
-            <input 
-                type="text" 
-                id="searchInput" 
-                placeholder="Search for images... (nature, animals, city, etc.)"
-                autocomplete="off"
-            >
-            <button onclick="searchImages()">Search</button>
-        </div>
-        
-        <div id="error" class="error" style="display:none;"></div>
-        <div id="gallery" class="gallery"></div>
-        <div id="loading" class="loading" style="display:none;">Searching...</div>
-        
-        <footer>
-            <p> Developed by <strong>Remigio Somera</strong></p>
-            <p style="font-size: 0.85em; margin-top: 8px;">Powered by Pexels API</p>
-        </footer>
-    </div>
+from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
+import requests
+import os
+
+app = Flask(__name__)
+CORS(app)
+
+PEXELS_API_KEY = os.getenv('PEXELS_API_KEY', '4yHfWT4ezaTjLRkvUTzZLEawiGPtiKKZpepaX7zRKvqakYbRoOKZ4tda')
+PEXELS_API_URL = 'https://api.pexels.com/v1'
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/api/search', methods=['GET'])
+def search_images():
+    query = request.args.get('query', '')
+    per_page = request.args.get('per_page', 20)
     
-    <script>
-        async function searchImages() {
-            const query = document.getElementById('searchInput').value.trim();
-            
-            if (!query) {
-                showError('Please enter a search term');
-                return;
-            }
-            
-            showLoading(true);
-            hideError();
-            
-            try {
-                const response = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
-                const data = await response.json();
-                
-                if (data.error) {
-                    showError(data.error);
-                    return;
-                }
-                
-                displayImages(data.photos || []);
-            } catch (error) {
-                showError('Failed to search images: ' + error.message);
-            } finally {
-                showLoading(false);
-            }
-        }
-        
-        function displayImages(photos) {
-            const gallery = document.getElementById('gallery');
-            gallery.innerHTML = '';
-            
-            if (photos.length === 0) {
-                gallery.innerHTML = '<p style="color: white; grid-column: 1/-1;">No images found</p>';
-                return;
-            }
-            
-            photos.forEach(photo => {
-                const card = document.createElement('div');
-                card.className = 'image-card';
-                card.innerHTML = `
-                    <img src="${photo.src.medium}" alt="${photo.photographer}">
-                    <div class="image-info">
-                        <button class="download-btn" onclick="downloadImage('${photo.src.large}')">
-                             Free Download
-                        </button>
-                    </div>
-                `;
-                gallery.appendChild(card);
-            });
-        }
-        
-        function downloadImage(url) {
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'image.jpg';
-            a.click();
-        }
-        
-        function showError(message) {
-            const errorDiv = document.getElementById('error');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-        }
-        
-        function hideError() {
-            document.getElementById('error').style.display = 'none';
-        }
-        
-        function showLoading(show) {
-            document.getElementById('loading').style.display = show ? 'block' : 'none';
-        }
-        
-        document.getElementById('searchInput').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                searchImages();
-            }
-        });
-        
-        window.addEventListener('load', function() {
-            document.getElementById('searchInput').value = 'nature';
-            searchImages();
-        });
-    </script>
-</body>
-</html>
+    if not query:
+        return jsonify({'error': 'Query required'}), 400
+    
+    if not PEXELS_API_KEY:
+        return jsonify({'error': 'Pexels API key not configured'}), 500
+    
+    headers = {
+        'Authorization': PEXELS_API_KEY
+    }
+    
+    params = {
+        'query': query,
+        'per_page': min(int(per_page), 80),
+        'page': request.args.get('page', 1)
+    }
+    
+    try:
+        response = requests.get(
+            f'{PEXELS_API_URL}/search',
+            headers=headers,
+            params=params
+        )
+        data = response.json()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=False)
